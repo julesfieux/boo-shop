@@ -11,10 +11,13 @@ export class Products extends Component {
 
 	componentDidMount() {
 		axios.get('/wp-json/wp/v2/product?per_page=100')
-			.then(res => this.setState({
-				products: res.data,
-				isLoaded: true
-			}))
+			.then((response) => {
+				console.log(response)
+				this.setState({
+					products : response.data,
+					isLoaded : true
+				})
+			})
 			.catch(err => console.log(err));
 	}
 
