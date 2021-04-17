@@ -11,7 +11,7 @@ export class CGV extends Component {
 			.then((response) => {
 				console.log(response)
 				this.setState({
-					CGV : response.data,
+					pages : response.data,
 					isLoaded : true
 				})
 			})
@@ -20,15 +20,17 @@ export class CGV extends Component {
 
 	render() {
 		const { pages, isLoaded } = this.state;
+		console.log("pages = ", pages)
 		if(isLoaded)
 		{
 			return (
 				<div>
-					<div dangerouslySetInnerHTML={{__html: pages.title.rendered}} />
-					<div dangerouslySetInnerHTML={{__html: pages.content.rendered}} />
+					<div dangerouslySetInnerHTML={{__html: pages[0].title.rendered}} />
+					<div dangerouslySetInnerHTML={{__html: pages[0].content.rendered}} />
 				</div>
 			)
 		}
+		return <h3>Loading...</h3>
 	}
 }
 
