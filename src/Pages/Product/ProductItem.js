@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 export class ProductItem extends Component {
 	state = {
@@ -27,16 +27,14 @@ export class ProductItem extends Component {
 	}
 
 	render() {
-		const{title, content} = this.props.product;
+		const{title} = this.props.product;
 		const isLoaded = this.state;
 		const imgUrl = this.props.product.kb_featured_image_src_large
 		if(isLoaded) {
 			return (
 				<div>
-					<p></p>
 					<div dangerouslySetInnerHTML={{__html: title.rendered}} />
-					<img src={imgUrl} alt="imgUrl" />
-					<div dangerouslySetInnerHTML={{__html: content.rendered}} />
+					<img style={{width: '100%'}} src={imgUrl} alt="imgUrl" />
 				</div>
 			)
 		}

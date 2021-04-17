@@ -1,11 +1,18 @@
 import './App.css';
-import Products from './components/Products';
+import Products from './Pages/Product/Products';
+import CGV from './Pages/CGV/CGV';
 
 function App() {
   return (
     <div className="App">
-      <Products />
+		<div>
+			<Products />
+		</div>
+		<div>
+			<CGV />
+  		</div>
     </div>
+	
   );
 }
 
