@@ -27,10 +27,14 @@ export class ProductSheet extends Component {
 			console.log(attributes);
 
 			const nameAttributes = attributes[0].options;
-			const widthAttribtes = attributes[1].options;
+			var widthAttribtes = 'No Name';
+			if (attributes.length > 1)
+				widthAttribtes = attributes[1].options;
 
 			const attributes1 = attributes[0].name;
-			const attributes2 = attributes[1].name;
+			var attributes2 = 'No Name';
+			if (attributes.length > 1)
+				attributes2 = attributes[1].name;
 
 			console.log("nameAttributes = ", nameAttributes);
 			console.log("widthAttribtes = ", widthAttribtes);
@@ -42,21 +46,36 @@ export class ProductSheet extends Component {
 					)}
 					<div dangerouslySetInnerHTML={{__html: name}} />
 					<div dangerouslySetInnerHTML={{__html: price_html}} />
-					<p> {attributes1 }</p>
-					<select name="attributes" id="attributes">
-						<option value="">Choisir une option</option>
-						{nameAttributes.map(name => 
-							<option key={name}>{name}</option>
-						)}
-					</select>
-					<p> {attributes2 }</p>
-					<select name="attributes" id="attributes">
-						<option value="">Choisir une option</option>
-						{widthAttribtes.map(width => 
-							<option key={width}>{width}</option>
-						)}
-						
-					</select>
+					{attributes.length == 1 ?
+						<div>
+							<p> {attributes1 }</p>
+							<select name="attributes" id="attributes">
+								<option value="">Choisir une option</option>
+								{nameAttributes.map(name => 
+									<option key={name}>{name}</option>
+								)}
+							</select>
+						</div>
+						:
+						<div>
+							
+							<p> {attributes1 }</p>
+							<select name="attributes" id="attributes">
+								<option value="">Choisir une option</option>
+								{nameAttributes.map(name => 
+									<option key={name}>{name}</option>
+								)}
+							</select>
+							
+								<p> {attributes2 }</p>
+								<select name="attributes" id="attributes">
+								<option value="">Choisir une option</option>
+								{widthAttribtes.map(width => 
+									<option key={width}>{width}</option>
+								)}
+								</select>
+						</div>
+					}
 					<br/>
 					<button>
 						AJOUTER AU PANIER
