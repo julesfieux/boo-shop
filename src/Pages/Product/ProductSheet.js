@@ -17,6 +17,7 @@ export class ProductSheet extends Component {
 			id : response.data.id,
 		});
 		const avis = await axios.get(`/wp-json/wc/v3/products/reviews?consumer_key=ck_acd4c92536a33dc7c7198a543cfcc6c5713c86d4&consumer_secret=cs_e3acd37c16749e23f1e29a36d3179dfb5aa0d8c0&product=${this.state.id}`)
+		console.log("Avis + ", avis);
 		this.setState({
 			reviews : avis.data,
 			isLoaded : true
@@ -26,7 +27,7 @@ export class ProductSheet extends Component {
 	render() {
 		const {isLoaded} = this.state;
 		const { name, description, dimensions, weight, images, attributes, price_html } = this.state.product;
-		const { reviewer, date_created, review, rating } =this.state.reviews;
+		
 		if(isLoaded) {
 			console.log("review = ", this.state.reviews);
 			const nameAttributes = attributes[0].options;
@@ -87,7 +88,16 @@ export class ProductSheet extends Component {
 					<h2>Poids {weight}</h2>
 					<h2>Dimensions {dimensions.length}x{dimensions.width}x{dimensions.height}</h2>
 					<button>AVIS</button>
-					<div>{rating}</div>
+					{this.state.reviews.map(review => {
+						return (
+							<div>
+								<div>{review.reviewer}</div>
+								<div>{review.date_created}</div>
+								<div>{review.rating}</div>/5
+								<div dangerouslySetInnerHTML={{__html: review.review}} />
+							</div>
+						)
+					})}
 				</div>
 			)
 		}
