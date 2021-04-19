@@ -4,28 +4,31 @@ import axios from 'axios';
 export class ProductSheet extends Component {
 	state = {
 		product: [],
+		reviews: [],
+		id: '',
 		isLoaded: false
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		const Url = window.location.pathname;
-		console.log('Url =', Url);
-		axios.get(`/wp-json/wc/v3/${Url}?consumer_key=ck_acd4c92536a33dc7c7198a543cfcc6c5713c86d4&consumer_secret=cs_e3acd37c16749e23f1e29a36d3179dfb5aa0d8c0`)
-			.then((response) => {
-				this.setState({
-					product : response.data,
-					isLoaded : true
-				})
-			})
-			.catch(err => console.log(err));
+		const response = await axios.get(`/wp-json/wc/v3/${Url}?consumer_key=ck_acd4c92536a33dc7c7198a543cfcc6c5713c86d4&consumer_secret=cs_e3acd37c16749e23f1e29a36d3179dfb5aa0d8c0`);
+		this.setState({
+			product : response.data,
+			id : response.data.id,
+		});
+		const avis = await axios.get(`/wp-json/wc/v3/products/reviews?consumer_key=ck_acd4c92536a33dc7c7198a543cfcc6c5713c86d4&consumer_secret=cs_e3acd37c16749e23f1e29a36d3179dfb5aa0d8c0&product=${this.state.id}`)
+		this.setState({
+			reviews : avis.data,
+			isLoaded : true
+		});
 	}
 
 	render() {
 		const {isLoaded} = this.state;
-		const { name, description, dimensions, weight, categories, images, attributes, price_html } = this.state.product;
+		const { name, description, dimensions, weight, images, attributes, price_html } = this.state.product;
+		const { reviewer, date_created, review, rating } =this.state.reviews;
 		if(isLoaded) {
-			console.log(attributes);
-
+			console.log("review = ", this.state.reviews);
 			const nameAttributes = attributes[0].options;
 			var widthAttribtes = 'No Name';
 			if (attributes.length > 1)
@@ -36,8 +39,6 @@ export class ProductSheet extends Component {
 			if (attributes.length > 1)
 				attributes2 = attributes[1].name;
 
-			console.log("nameAttributes = ", nameAttributes);
-			console.log("widthAttribtes = ", widthAttribtes);
 			return (
 				<div>
 					<img style={{width: '100%'}} src={images[0].src} alt="productImg" />
@@ -46,7 +47,7 @@ export class ProductSheet extends Component {
 					)}
 					<div dangerouslySetInnerHTML={{__html: name}} />
 					<div dangerouslySetInnerHTML={{__html: price_html}} />
-					{attributes.length == 1 ?
+					{attributes.length === 1 ?
 						<div>
 							<p> {attributes1 }</p>
 							<select name="attributes" id="attributes">
@@ -86,6 +87,7 @@ export class ProductSheet extends Component {
 					<h2>Poids {weight}</h2>
 					<h2>Dimensions {dimensions.length}x{dimensions.width}x{dimensions.height}</h2>
 					<button>AVIS</button>
+					<div>{rating}</div>
 				</div>
 			)
 		}
