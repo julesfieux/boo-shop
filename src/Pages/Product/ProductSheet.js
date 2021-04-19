@@ -24,7 +24,16 @@ export class ProductSheet extends Component {
 		const {isLoaded} = this.state;
 		const { name, description, dimensions, weight, categories, images, attributes, price_html } = this.state.product;
 		if(isLoaded) {
-			console.log("ATTRIBUTES = " + attributes.map(oui => console.log("OUI = " + oui.options)));
+			console.log(attributes);
+
+			const nameAttributes = attributes[0].options;
+			const widthAttribtes = attributes[1].options;
+
+			const attributes1 = attributes[0].name;
+			const attributes2 = attributes[1].name;
+
+			console.log("nameAttributes = ", nameAttributes);
+			console.log("widthAttribtes = ", widthAttribtes);
 			return (
 				<div>
 					<img style={{width: '100%'}} src={images[0].src} alt="productImg" />
@@ -33,7 +42,22 @@ export class ProductSheet extends Component {
 					)}
 					<div dangerouslySetInnerHTML={{__html: name}} />
 					<div dangerouslySetInnerHTML={{__html: price_html}} />
-
+					<p> {attributes1 }</p>
+					<select name="attributes" id="attributes">
+						<option value="">Choisir une option</option>
+						{nameAttributes.map(name => 
+							<option key={name}>{name}</option>
+						)}
+					</select>
+					<p> {attributes2 }</p>
+					<select name="attributes" id="attributes">
+						<option value="">Choisir une option</option>
+						{widthAttribtes.map(width => 
+							<option key={width}>{width}</option>
+						)}
+						
+					</select>
+					<br/>
 					<button>
 						AJOUTER AU PANIER
 					</button>
