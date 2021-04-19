@@ -1,19 +1,17 @@
+import React, {Fragment} from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Products from './Pages/Product/Products';
-import CGV from './Pages/CGV/CGV';
+import ProductSheet from './Pages/Product/ProductSheet';
 
-function App() {
-  return (
-    <div className="App">
-		<div>
-			<Products />
-		</div>
-		<div>
-			<CGV />
-  		</div>
-    </div>
-	
-  );
-}
+
+const App = () => (
+	<Router>
+		<Fragment>
+			<Route exact path="/products" component={Products} />
+			<Route path="/products/:id" component={ProductSheet} />
+    	</Fragment>
+	</Router>
+)
 
 export default App;

@@ -6,10 +6,11 @@ export class CGV extends Component {
 		pages: [],
 		isLoaded: false
 	}
+
 	componentDidMount() {
 		axios.get('/wp-json/wp/v2/pages?per_page=1')
 			.then((response) => {
-				console.log(response)
+				console.log("Reponse = " + response)
 				this.setState({
 					pages : response.data,
 					isLoaded : true
@@ -20,14 +21,14 @@ export class CGV extends Component {
 
 	render() {
 		const { pages, isLoaded } = this.state;
-		console.log("pages = ", pages)
+		console.log("Pages = " + pages);
 		if(isLoaded)
 		{
 			return (
-				<div>
-					<div dangerouslySetInnerHTML={{__html: pages[0].title.rendered}} />
-					<div dangerouslySetInnerHTML={{__html: pages[0].content.rendered}} />
-				</div>
+			<div>
+				<div dangerouslySetInnerHTML={{__html: pages[0].title.rendered}} />
+				<div dangerouslySetInnerHTML={{__html: pages[0].content.rendered}} />
+			</div>
 			)
 		}
 		return <h3>Loading...</h3>

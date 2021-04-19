@@ -10,9 +10,9 @@ export class Products extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('/wp-json/wp/v2/product?per_page=100')
+		axios.get('/wp-json/wc/v3/products?consumer_key=ck_acd4c92536a33dc7c7198a543cfcc6c5713c86d4&consumer_secret=cs_e3acd37c16749e23f1e29a36d3179dfb5aa0d8c0&per_page=100')
 			.then((response) => {
-				console.log(response)
+				console.log("products =", response)
 				this.setState({
 					products : response.data,
 					isLoaded : true
@@ -26,9 +26,9 @@ export class Products extends Component {
 		if(isLoaded) {
 			return (
 				<div>
-					{ products.map(product => (
-						<ProductItem key={product.id} product={product} />
-					)) }
+						{ products.map(product => (
+							<ProductItem key={product.id} product={product} />
+						)) }
 				</div>
 			)
 		}
